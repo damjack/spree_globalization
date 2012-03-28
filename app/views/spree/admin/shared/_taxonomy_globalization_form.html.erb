@@ -1,0 +1,31 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#tabs_t").tabs();
+});
+</script>
+<div id="tabs_t" data-hook="admin_inside_taxonomy_form">
+<% if(Spree::Taxonomy.translated_locales.blank?) %>
+	<%= f.field_container :name do %>
+		<%= f.label :name, t(:name) %> <span class="required">*</span><br />
+		<%= error_message_on :taxonomy, :name, :class => 'fullwidth title' %>
+		<%= text_field :taxonomy, :name %>
+	<% end %>
+<% else %>
+	<ul>
+		<%- Spree::Taxonomy.translated_locales.each do |locale| %>
+		<li><%= link_to "#{locale.to_s.titleize}", "#tab_#{locale.to_s}"%></li>
+		<%- end -%>
+	</ul>
+	<%- Spree::Taxonomy.translated_locales.each do |locale| %>
+	<div id="tab_<%= locale.to_s %>">
+		<% fieldsym = "name_#{locale}".to_sym %>
+		<%= f.field_container fieldsym do %>
+			<%= f.label fieldsym, t(fieldsym.to_s) %><span class="required">*</span><br />
+			<%= error_message_on :taxonomy, fieldsym, :class => 'fullwidth title' %>
+			<%= text_field :taxonomy, fieldsym %>
+		<% end %>
+	</div>
+	<% end %>
+<% end %>
+	
+</div>

@@ -1,0 +1,43 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#tabs_pp").tabs();
+});
+</script>
+<div id="tabs_pp" data-hook="admin_property_form">
+<% if(Spree::Property.translated_locales.blank?) %>
+	<%= f.field_container :name do %>
+		<%= f.label :name, t(:name) %> <span class="required">*</span><br />
+		<%= f.text_field :name %>
+		<%= f.error_message_on :name %>
+	<% end %>
+
+	<%= f.field_container :presentation do %>
+		<%= f.label :presentation, t(:presentation) %> <span class="required">*</span><br />
+		<%= f.text_field :presentation %>
+		<%= f.error_message_on :presentation %>
+	<% end %>
+<% else %>
+	<ul>
+		<%- Spree::Property.translated_locales.each do |locale| %>
+		<li><%= link_to "#{locale.to_s.titleize}", "#tab_pp_#{locale.to_s}"%></li>
+		<%- end -%>
+	</ul>
+	<%- Spree::Property.translated_locales.each do |locale| %>
+	<div id="tab_pp_<%= locale.to_s %>">
+		<% fieldsym = "name_#{locale}".to_sym %>
+		<%= f.field_container fieldsym do %>
+			<%= f.label fieldsym, t(fieldsym.to_s) %><span class="required">*</span><br />
+			<%= f.text_field fieldsym %>
+			<%= f.error_message_on fieldsym %>
+		<% end %>
+		
+		<% fieldsym = "presentation_#{locale}".to_sym %>
+		<%= f.field_container fieldsym do %>
+			<%= f.label fieldsym, t(fieldsym.to_s) %><span class="required">*</span><br />
+			<%= f.text_field fieldsym %>
+			<%= f.error_message_on fieldsym %>
+		<% end %>
+	</div>
+	<% end %>
+<% end %>
+</div>

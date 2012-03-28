@@ -1,0 +1,69 @@
+<script type="text/javascript">
+$(document).ready(function() {
+	$("#tabs_pt").tabs();
+});
+</script>
+<div id="tabs_pt">
+<% if(Spree::Prototype.translated_locales.blank?) %>
+	<%= f.field_container :name do %>
+		<%= f.label :name, t(:name) %><br />
+		<%= f.text_field :name %>
+		<%= f.error_message_on :name %>
+	<% end %>
+<% else %>
+	<ul>
+		<%- Spree::Prototype.translated_locales.each do |locale| %>
+		<li><%= link_to "#{locale.to_s.titleize}", "#tab_pt_#{locale.to_s}"%></li>
+		<%- end -%>
+	</ul>
+	<%- Spree::Prototype.translated_locales.each do |locale| %>
+	<div id="tab_pt_<%= locale.to_s %>">
+		<% fieldsym = "name_#{locale}".to_sym %>
+		<%= f.field_container fieldsym do %>
+			<%= f.label fieldsym, t(fieldsym.to_s)%> <span class="required">*</span><br />
+			<%= f.text_field fieldsym %>
+			<%= f.error_message_on fieldsym %>
+		<% end %>
+	</div>
+	<% end %>
+<% end %>
+</div>
+
+<h3><%= t(:properties) %></h3>
+
+<ul class='checkbox-list' id='properties' data-hook>
+<% Spree::Property.sorted.each do |property| %>
+  <% selected = if @prototype.new_record?
+    (params[:property] and params[:property][:id] and params[:property][:id].include?(property.id.to_s))
+  else
+    @prototype.properties.include?(property)
+  end %>
+  <li>
+    <label>
+      <%= check_box_tag 'property[id][]', "#{property.id}", selected %>
+      <%= property.name %>
+    </label>
+  </li>
+<% end %>
+</ul>
+
+<hr />
+
+<h3><%= t(:option_types) %></h3>
+
+<ul class="checkbox-list" id="option_types" data-hook>
+<% Spree::OptionType.all.each do |option_type| %>
+  <% selected = if @prototype.new_record?
+    (params[:option_type] and params[:option_type][:id] and params[:option_type][:id].include?(option_type.id.to_s))
+  else
+    @prototype.option_types.include?(option_type)
+  end %>
+  <li>
+    <label>
+      <%= check_box_tag 'option_type[id][]', "#{option_type.id}", selected %>
+      <%= option_type.name %>
+    </label>
+  </li>
+<% end %>
+</ul>
+<hr />

@@ -1,0 +1,11 @@
+<%= form_tag "/locale/set", :method => :get, :id => "language_form" do %>
+	<div id="language_switcher" class="s_switcher">
+		<input class="s_hidden" type="hidden" name="locale" value="">
+		<span class="s_selected"><%= t("#{I18n.locale.to_s}_language") %></span>
+		<ul class="s_options" style="display: none; ">
+		<% Spree::Config[:locales].split(",").each do |l| %>
+			<%= content_tag(:li, link_to(t("#{l}_language"), "javascript: $('input[name=locale]').attr('value', '#{l}'); $('#language_form').submit();")) %>
+		<% end %>
+		</ul>
+	</div>
+<% end %>

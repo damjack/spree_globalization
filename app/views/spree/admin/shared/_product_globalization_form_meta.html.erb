@@ -1,0 +1,41 @@
+<div id="tabs_meta" data-hook="admin_product_form_meta">
+<% if(Spree::Product.translated_locales.blank?) %>
+	
+	<%= f.field_container :meta_description do %>
+		<%= f.label :meta_description, t("description")%><br />
+		<%= f.text_field :meta_description, :class => 'fullwidth' %>
+		<%= f.error_message_on :meta_description %>
+	<% end %>
+	
+	<%= f.field_container :meta_keywords do %>
+		<%= f.label :meta_keywords, t("description")%><br />
+		<%= f.text_field :meta_keywords, :class => 'fullwidth' %>
+		<%= f.error_message_on :meta_keywords %>
+	<% end %>
+
+	<% else %>
+	<ul>
+	<%- Spree::Product.translated_locales.each do |locale| %>
+		<li><%= link_to "#{locale.to_s.titleize}", "#tabm_#{locale.to_s}"%></li>
+	<%- end -%>
+	</ul>
+	<%- Spree::Product.translated_locales.each do |locale| %>
+	<div id="tabm_<%= locale.to_s %>">
+		<% fieldsym = "meta_description_#{locale}".to_sym %>
+		<%= f.field_container fieldsym do %>
+			<%= f.label fieldsym, t(fieldsym.to_s)%><br />
+			<%= f.text_field fieldsym, :class => 'fullwidth' %>
+			<%= f.error_message_on fieldsym %>
+		<% end %>
+		
+		<% fieldsym = "meta_keywords_#{locale}".to_sym %>
+		<%= f.field_container fieldsym do %>
+			<%= f.label fieldsym, t(fieldsym.to_s)%><br />
+			<%= f.text_field fieldsym, :class => 'fullwidth' %>
+			<%= f.error_message_on fieldsym %>
+		<% end %>
+	</div>
+	<% end %>
+
+	<% end %>
+</div>

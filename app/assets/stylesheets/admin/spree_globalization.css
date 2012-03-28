@@ -1,0 +1,26 @@
+/*
+ *= require admin/spree_core
+*/
+
+.ui-tabs .ui-tabs-hide {
+	display: none !important;
+}
+
+.ui-tabs, .ui-tabs-panel {
+	border: none;
+}
+
+.ui-tabs .ui-tabs-nav li {
+	list-style: none;
+	float: left;
+	position: relative;
+	top: 1px;
+	margin: 0 .2em 1px 0;
+	border-bottom: 0 !important;
+	padding: 5px;
+	white-space: nowrap;
+}
+
+.ui-tabs .ui-tabs-nav li a {
+	padding: 5px;
+}

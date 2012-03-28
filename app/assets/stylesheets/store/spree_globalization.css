@@ -1,0 +1,14 @@
+/*
+ *= require store/spree_core
+*/
+
+#language_form {
+	float: left;
+	margin-left: 300px;
+}
+
+#language_switcher {
+	position: relative;
+	width: 100px;
+	top: 23px;
+}

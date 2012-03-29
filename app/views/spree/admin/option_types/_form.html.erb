@@ -4,7 +4,7 @@ $(document).ready(function() {
 });
 </script>
 <div id="tabs_ot">
-<% if(Spree::OptionType.translated_locales.blank?) %>
+<% if(Spree::OptionType::LANG.blank?) %>
 	<%= f.field_container :name do %>
 		<%= f.label :name, t(:name) %> <span class="required">*</span><br />
 		<%= f.text_field :name %>
@@ -18,11 +18,11 @@ $(document).ready(function() {
 	<% end %>
 <% else %>
 	<ul>
-		<%- Spree::OptionType.translated_locales.each do |locale| %>
+		<%- Spree::OptionType::LANG.each do |locale| %>
 		<li><%= link_to "#{locale.to_s.titleize}", "#tab_ot_#{locale.to_s}"%></li>
 		<%- end -%>
 	</ul>
-	<%- Spree::OptionType.translated_locales.each do |locale| %>
+	<%- Spree::OptionType::LANG.each do |locale| %>
 	<div id="tab_ot_<%= locale.to_s %>">
 		<% fieldsym = "name_#{locale}".to_sym %>
 		<%= f.field_container fieldsym do %>

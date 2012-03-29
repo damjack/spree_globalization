@@ -2,4 +2,13 @@
 it:
   it_language: Italiano
   en_language: Inglese
+  es_language: Spagnolo
+  fr_language: Francese
+  nl_language: Olandese
+  el_language: Greco
+  de_language: Teseco
+  pt_language: Portoghese
+  ru_language: Russo
+  cs_language: Ceco
+  sl_language: Sloveno
   locales: Lingue (inserire solo i codici lingua separati da virgola)

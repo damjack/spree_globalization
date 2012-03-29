@@ -4,7 +4,7 @@ $(document).ready(function() {
 });
 </script>
 <div id="tabs_pp" data-hook="admin_property_form">
-<% if(Spree::Property.translated_locales.blank?) %>
+<% if(Spree::Property::LANG.blank?) %>
 	<%= f.field_container :name do %>
 		<%= f.label :name, t(:name) %> <span class="required">*</span><br />
 		<%= f.text_field :name %>
@@ -18,11 +18,11 @@ $(document).ready(function() {
 	<% end %>
 <% else %>
 	<ul>
-		<%- Spree::Property.translated_locales.each do |locale| %>
+		<%- Spree::Property::LANG.each do |locale| %>
 		<li><%= link_to "#{locale.to_s.titleize}", "#tab_pp_#{locale.to_s}"%></li>
 		<%- end -%>
 	</ul>
-	<%- Spree::Property.translated_locales.each do |locale| %>
+	<%- Spree::Property::LANG.each do |locale| %>
 	<div id="tab_pp_<%= locale.to_s %>">
 		<% fieldsym = "name_#{locale}".to_sym %>
 		<%= f.field_container fieldsym do %>

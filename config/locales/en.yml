@@ -2,4 +2,13 @@
 en:
   it_language: Italian
   en_language: English
+  es_language: Spanish
+  fr_language: French
+  nl_language: Dutch
+  el_language: Greek
+  de_language: German
+  pt_language: Portuguese
+  ru_language: Russian
+  cs_language: Czech
+  sl_language: Slovenian
   locales: Languages (only enter the language codes separated by commas)

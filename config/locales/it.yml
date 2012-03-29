@@ -2,3 +2,4 @@
 it:
   it_language: Italiano
   en_language: Inglese
+  locales: Lingue (inserire solo i codici lingua separati da virgola)

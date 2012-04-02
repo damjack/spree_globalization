@@ -7,14 +7,6 @@ class AddGlobalizeToModels < ActiveRecord::Migration
     Spree::Taxon.create_translation_table!({:name => :string, :description => :text, :permalink => :string}, {:migrate_data => true})
     Spree::OptionType.create_translation_table!({:name => :string, :presentation => :string}, {:migrate_data => true})
     Spree::OptionValue.create_translation_table!({:name => :string, :presentation => :string}, {:migrate_data => true})
-    
-    #Spree::Product.migrate_translated_fields
-    #Spree::Property.migrate_translated_fields
-    #Spree::Prototype.migrate_translated_fields
-    #Spree::Taxonomy.migrate_translated_fields
-    #Spree::Taxon.migrate_translated_fields
-    #Spree::OptionType.migrate_translated_fields
-    #Spree::OptionValue.migrate_translated_fields
   end
   
   def down

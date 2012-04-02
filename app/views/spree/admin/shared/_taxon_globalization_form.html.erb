@@ -40,7 +40,8 @@ $(document).ready(function() {
 		<% fieldsym = "permalink_part_#{locale}".to_sym %>
 		<%= f.field_container fieldsym do %>
 			<%= f.label fieldsym, t(fieldsym.to_s) %><span class="required">*</span><br />
-			<%= @taxon.permalink.split("/")[0...-1].join("/") + "/" %><%= text_field_tag fieldsym, @permalink_part %>
+			<% I18n.locale = locale.to_sym %>
+			<%= Spree::Taxon.find(@taxon.id).permalink.split("/")[0...-1].join("/") + "/" %><%= text_field_tag fieldsym, Spree::Taxon.find(@taxon.id).permalink.split("/").last %>
 			<%= f.error_message_on fieldsym %>
 		<% end %>
 		

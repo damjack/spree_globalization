@@ -4,7 +4,7 @@ $(document).ready(function() {
 });
 </script>
 <div id="tabs_pt">
-<% if(LANG.blank?) %>
+<% if(Spree::Prototype::LANG.blank?) %>
 	<%= f.field_container :name do %>
 		<%= f.label :name, t(:name) %><br />
 		<%= f.text_field :name %>
@@ -12,11 +12,11 @@ $(document).ready(function() {
 	<% end %>
 <% else %>
 	<ul>
-		<%- LANG.each do |locale| %>
+		<%- Spree::Prototype::LANG.each do |locale| %>
 		<li><%= link_to "#{locale.to_s.titleize}", "#tab_pt_#{locale.to_s}"%></li>
 		<%- end -%>
 	</ul>
-	<%- LANG.each do |locale| %>
+	<%- Spree::Prototype::LANG.each do |locale| %>
 	<div id="tab_pt_<%= locale.to_s %>">
 		<% fieldsym = "name_#{locale}".to_sym %>
 		<%= f.field_container fieldsym do %>

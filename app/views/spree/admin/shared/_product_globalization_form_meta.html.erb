@@ -1,5 +1,5 @@
 <div id="tabs_meta" data-hook="admin_product_form_meta">
-<% if(LANG.blank?) %>
+<% if(Spree::Product::LANG.blank?) %>
 	
 	<%= f.field_container :meta_description do %>
 		<%= f.label :meta_description, t("description")%><br />
@@ -15,11 +15,11 @@
 
 	<% else %>
 	<ul>
-	<%- LANG.each do |locale| %>
+	<%- Spree::Product::LANG.each do |locale| %>
 		<li><%= link_to "#{locale.to_s.titleize}", "#tabm_#{locale.to_s}"%></li>
 	<%- end -%>
 	</ul>
-	<%- LANG.each do |locale| %>
+	<%- Spree::Product::LANG.each do |locale| %>
 	<div id="tabm_<%= locale.to_s %>">
 		<% fieldsym = "meta_description_#{locale}".to_sym %>
 		<%= f.field_container fieldsym do %>

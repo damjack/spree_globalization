@@ -4,7 +4,7 @@ $(document).ready(function() {
 });
 </script>
 <div id="tabs_t" data-hook="admin_inside_taxon_form">
-<% if(LANG.blank?) %>
+<% if(Spree::Taxon::LANG.blank?) %>
 
 	<%= f.field_container :name do %>
 		<%= f.label :name, t(:name) %> <span class="required">*</span><br />
@@ -24,11 +24,11 @@ $(document).ready(function() {
 
 <% else %>
 	<ul>
-		<%- LANG.each do |locale| %>
+		<%- Spree::Taxon::LANG.each do |locale| %>
 		<li><%= link_to "#{locale.to_s.titleize}", "#tab_#{locale.to_s}"%></li>
 		<%- end -%>
 	</ul>
-	<%- LANG.each do |locale| %>
+	<%- Spree::Taxon::LANG.each do |locale| %>
 	<div id="tab_<%= locale.to_s %>">
 		<% fieldsym = "name_#{locale}".to_sym %>
 		<%= f.field_container fieldsym do %>

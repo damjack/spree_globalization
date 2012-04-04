@@ -4,7 +4,7 @@ $(document).ready(function() {
 });
 </script>
 <div id="tabs_left" class="left" data-hook="admin_product_form_left">
-<% if(Spree::Product::LANG.blank?) %>
+<% if(LANG.blank?) %>
 
 	<%= f.field_container :name do %>
 		<%= f.label :name, t("name") %> <span class="required">*</span><br />
@@ -26,11 +26,11 @@ $(document).ready(function() {
 
 	<% else %>
 	<ul>
-	<%- Spree::Product::LANG.each do |locale| %>
+	<%- LANG.each do |locale| %>
 		<li><%= link_to "#{locale.to_s.titleize}", "#tab_#{locale.to_s}"%></li>
 	<%- end -%>
 	</ul>
-	<%- Spree::Product::LANG.each do |locale| %>
+	<%- LANG.each do |locale| %>
 	<div id="tab_<%= locale.to_s %>">
 		<% fieldsym = "name_#{locale}".to_sym %>
 		<%= f.field_container fieldsym do %>

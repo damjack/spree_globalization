@@ -13,4 +13,5 @@ Spree::Taxon.class_eval do
       self.permalink = [parent_taxon.permalink, (self.permalink.blank? ? name.to_url : self.permalink.split('/').last)].join('/')
     end
   end
+  
 end

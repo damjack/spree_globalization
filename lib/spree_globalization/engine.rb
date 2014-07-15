@@ -1,4 +1,7 @@
 module SpreeGlobalization
+  mattr_accessor :use_locale_filter
+  @@use_locale_filter = true
+
   class Engine < Rails::Engine
     engine_name 'spree_globalization'
 
@@ -10,12 +13,9 @@ module SpreeGlobalization
     end
 
     def self.activate
-      Dir.glob(File.join(File.dirname(__FILE__), "../../app/**/*_decorator*.rb")) do |c|
+      Dir.glob(File.join(File.dirname(__FILE__), "../../{app,lib}/**/*_decorator*.rb")) do |c|
         Rails.configuration.cache_classes ? require(c) : load(c)
       end
-      
-      I18n::Backend::Simple.send(:include, I18n::Backend::Fallbacks)
-      
     end
 
     config.to_prepare &method(:activate).to_proc

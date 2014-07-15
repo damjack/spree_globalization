@@ -1,7 +1,5 @@
 Spree::OptionValue.class_eval do
-  LANG = Spree::Config[:locales].split(",").collect {|l| l.to_sym} rescue I18n.available_locales
-  
-  translates :name, :presentation, :fallbacks_for_empty_translations => true
-  globalize_accessors :locales => LANG, :attributes => [:name, :presentation]
-  
+  translates :name, :presentation
+  attr_accessible :translations, :translations_attributes
+  accepts_nested_attributes_for :translations
 end

@@ -4,7 +4,7 @@ $(document).ready(function() {
 });
 </script>
 <div id="tabs_ot">
-<% if(Spree::OptionType::LANG.blank?) %>
+<% if(Spree::Config[:locale].split(",").blank? && Spree::Config[:locale].split(",").count <= 1) %>
 	<%= f.field_container :name do %>
 		<%= f.label :name, t(:name) %> <span class="required">*</span><br />
 		<%= f.text_field :name %>
@@ -18,24 +18,17 @@ $(document).ready(function() {
 	<% end %>
 <% else %>
 	<ul>
-		<%- Spree::OptionType::LANG.each do |locale| %>
-		<li><%= link_to "#{locale.to_s.titleize}", "#tab_ot_#{locale.to_s}"%></li>
-		<%- end -%>
+	<% Spree::Config[:locale].split(",").each do |locale| %>
+		<li><%= link_to "#{locale.to_s.titleize}", "#tab_#{locale.to_s}"%></li>
+	<% end %>
 	</ul>
-	<%- Spree::OptionType::LANG.each do |locale| %>
+	<% Spree::Config[:locale].split(",").each do |locale| %>
 	<div id="tab_ot_<%= locale.to_s %>">
-		<% fieldsym = "name_#{locale}".to_sym %>
-		<%= f.field_container fieldsym do %>
-			<%= f.label fieldsym, t(fieldsym.to_s)%> <span class="required">*</span><br />
-			<%= f.text_field fieldsym %>
-			<%= f.error_message_on fieldsym %>
+		<%= f.globalize_fields_for locale.to_sym do |g| %>
+		<% Spree::OptionType.translated_attribute_names.each_with_index do |attr, i| %>
+			<%= g.label attr, t(attr) %><br />
+			<%= g.text_field attr, :class => 'fullwidth title'  %>
 		<% end %>
-		
-		<% fieldsym = "presentation_#{locale}".to_sym %>
-		<%= f.field_container fieldsym do %>
-			<%= f.label fieldsym, t(fieldsym.to_s)%> <span class="required">*</span><br />
-			<%= f.text_field fieldsym %>
-			<%= f.error_message_on fieldsym %>
 		<% end %>
 	</div>
 	<% end %>

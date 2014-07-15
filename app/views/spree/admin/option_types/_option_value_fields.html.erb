@@ -4,23 +4,25 @@ $(function() {
 });
 </script>
 <tr class="option_value fields" id="<%= dom_id(f.object) %>"  data-hook="option_value">
-<% if(Spree::OptionValue::LANG.blank?) %>
+<% if(Spree::Config[:locale].split(",").blank? && Spree::Config[:locale].split(",").count <= 1) %>
 	<td class="name"><%= f.text_field :name %></td>
 	<td class="presentation"><%= f.text_field :presentation %></td>
 <% else %>
 	<td colspan="2">
 		<div class="tabs_ov">
 			<ul>
-				<%- Spree::OptionValue::LANG.each do |locale| %>
+				<% Spree::Config[:locale].split(",").each do |locale| %>
 				<li><%= link_to "#{locale.to_s.titleize}", "#tab_ot_#{locale.to_s}"%></li>
-				<%- end -%>
+				<% end %>
 			</ul>
-			<%- Spree::OptionValue::LANG.each do |locale| %>
+			<% Spree::Config[:locale].split(",").each do |locale| %>
 			<div id="tab_ot_<%= locale.to_s %>">
-				<% fieldsym = "name_#{locale}".to_sym %>
-				<p class="name" style="float: left; clear: none;"><%= t(fieldsym) %> <%= f.text_field fieldsym %></p>
-				<% fieldsym = "presentation_#{locale}".to_sym %>
-				<p class="presentation" style="float: left; margin: 0px 20px; clear: none;"><%= t(fieldsym) %> <%= f.text_field fieldsym %></p>
+				<%= f.globalize_fields_for locale.to_sym do |g| %>
+				<% Spree::OptionType.translated_attribute_names.each_with_index do |attr, i| %>
+					<p class="name" style="float: left; clear: none;"><%= t(attr) %> <%= g.text_field attr %></p>
+					<p class="presentation" style="float: left; margin: 0px 20px; clear: none;"><%= t(attr) %> <%= g.text_field attr %></p>
+				<% end %>
+				<% end %>
 			</div>
 			<% end %>
 		</div>

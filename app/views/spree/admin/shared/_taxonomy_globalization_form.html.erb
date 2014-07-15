@@ -4,7 +4,7 @@ $(document).ready(function() {
 });
 </script>
 <div id="tabs_t" data-hook="admin_inside_taxonomy_form">
-<% if(Spree::Taxonomy::LANG.blank?) %>
+<% if(Spree::Config[:locale].split(",").blank? && Spree::Config[:locale].split(",").count <= 1) %>
 	<%= f.field_container :name do %>
 		<%= f.label :name, t(:name) %> <span class="required">*</span><br />
 		<%= error_message_on :taxonomy, :name, :class => 'fullwidth title' %>
@@ -12,17 +12,17 @@ $(document).ready(function() {
 	<% end %>
 <% else %>
 	<ul>
-		<%- Spree::Taxonomy::LANG.each do |locale| %>
+		<% Spree::Config[:locale].split(",").each do |locale| %>
 		<li><%= link_to "#{locale.to_s.titleize}", "#tab_#{locale.to_s}"%></li>
-		<%- end -%>
+		<% end %>
 	</ul>
-	<%- Spree::Taxonomy::LANG.each do |locale| %>
+	<% Spree::Config[:locale].split(",").each do |locale| %>
 	<div id="tab_<%= locale.to_s %>">
-		<% fieldsym = "name_#{locale}".to_sym %>
-		<%= f.field_container fieldsym do %>
-			<%= f.label fieldsym, t(fieldsym.to_s) %><span class="required">*</span><br />
-			<%= error_message_on :taxonomy, fieldsym, :class => 'fullwidth title' %>
-			<%= text_field :taxonomy, fieldsym %>
+		<%= f.globalize_fields_for locale.to_sym do |g| %>
+		<% Spree::Taxonomy.translated_attribute_names.each_with_index do |attr, i| %>
+			<%= g.label attr, t(attr) %><span class="required">*</span><br />
+			<%= g.text_field attr %>
+		<% end %>
 		<% end %>
 	</div>
 	<% end %>

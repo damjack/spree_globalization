@@ -1,5 +1,5 @@
 <div id="tabs_meta" data-hook="admin_product_form_meta">
-<% if(Spree::Product::LANG.blank?) %>
+<% if(Spree::Config[:locale].split(",").blank? && Spree::Config[:locale].split(",").count <= 1) %>
 	
 	<%= f.field_container :meta_description do %>
 		<%= f.label :meta_description, t("description")%><br />
@@ -13,29 +13,22 @@
 		<%= f.error_message_on :meta_keywords %>
 	<% end %>
 
-	<% else %>
+<% else %>
 	<ul>
-	<%- Spree::Product::LANG.each do |locale| %>
-		<li><%= link_to "#{locale.to_s.titleize}", "#tabm_#{locale.to_s}"%></li>
-	<%- end -%>
+	<% Spree::Config[:locale].split(",").each do |lang| %>
+		<li><%= link_to "#{lang.to_s.titleize}", "#tab_#{lang.to_s}"%></li>
+	<% end %>
 	</ul>
-	<%- Spree::Product::LANG.each do |locale| %>
-	<div id="tabm_<%= locale.to_s %>">
-		<% fieldsym = "meta_description_#{locale}".to_sym %>
-		<%= f.field_container fieldsym do %>
-			<%= f.label fieldsym, t(fieldsym.to_s)%><br />
-			<%= f.text_field fieldsym, :class => 'fullwidth' %>
-			<%= f.error_message_on fieldsym %>
+	<% Spree::Config[:locale].split(",").each do |lang| %>
+	<div id="tabm_<%= lang.to_s %>">
+		<%= f.globalize_fields_for lang.to_sym do |g| %>
+		<% [:meta_description, :meta_keywords].each_with_index do |attr, i| %>
+				<%= g.label attr, t(f) %><br />
+				<%= g.text_field attr, :class => 'fullwidth title'  %>
 		<% end %>
-		
-		<% fieldsym = "meta_keywords_#{locale}".to_sym %>
-		<%= f.field_container fieldsym do %>
-			<%= f.label fieldsym, t(fieldsym.to_s)%><br />
-			<%= f.text_field fieldsym, :class => 'fullwidth' %>
-			<%= f.error_message_on fieldsym %>
 		<% end %>
 	</div>
 	<% end %>
 
-	<% end %>
+<% end %>
 </div>

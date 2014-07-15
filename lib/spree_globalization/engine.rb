@@ -1,7 +1,4 @@
 module SpreeGlobalization
-  mattr_accessor :use_locale_filter
-  @@use_locale_filter = true
-
   class Engine < Rails::Engine
     engine_name 'spree_globalization'
 

@@ -17,4 +17,5 @@
 #
 Spree::AppConfiguration.class_eval do
   preference :locale, :string, :default => Rails.application.config.i18n.default_locale.to_s
+  preference :use_locale_filter, :boolean, :default => true
 end

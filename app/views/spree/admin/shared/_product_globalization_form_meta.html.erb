@@ -23,7 +23,7 @@
 	<div id="tabm_<%= lang.to_s %>">
 		<%= f.globalize_fields_for lang.to_sym do |g| %>
 		<% [:meta_description, :meta_keywords].each_with_index do |attr, i| %>
-				<%= g.label attr, t(f) %><br />
+				<%= g.label attr, t(attr) %><br />
 				<%= g.text_field attr, :class => 'fullwidth title'  %>
 		<% end %>
 		<% end %>

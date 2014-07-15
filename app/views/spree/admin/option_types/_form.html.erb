@@ -1,21 +1,25 @@
 <script type="text/javascript">
-$(document).ready(function() {
-	$("#tabs_ot").tabs();
-});
+	$(document).ready(function() {
+		$("#tabs_ot").tabs();
+	});
 </script>
-<div id="tabs_ot">
+<div id="tabs_ot" data-hook="admin_option_type_form_fields" class="align-center row">
 <% if(Spree::Config[:locale].split(",").blank? && Spree::Config[:locale].split(",").count <= 1) %>
-	<%= f.field_container :name do %>
-		<%= f.label :name, t(:name) %> <span class="required">*</span><br />
-		<%= f.text_field :name %>
-		<%= f.error_message_on :name %>
-	<% end %>
+  <div class="alpha eight columns">
+    <%= f.field_container :name do %>
+      <%= f.label :name, t(:name) %> <span class="required">*</span><br />
+      <%= f.text_field :name, :class => "fullwidth" %>
+      <%= f.error_message_on :name %>
+    <% end %>
+  </div>
 
-	<%= f.field_container :presentation do %>
-		<%= f.label :presentation, t(:presentation) %> <span class="required">*</span><br />
-		<%= f.text_field :presentation %>
-		<%= f.error_message_on :presentation %>
-	<% end %>
+  <div class="omega eight columns">
+    <%= f.field_container :presentation do %>
+      <%= f.label :presentation, t(:presentation) %> <span class="required">*</span><br />
+      <%= f.text_field :presentation, :class => "fullwidth" %>
+      <%= f.error_message_on :presentation %>
+    <% end %>
+  </div>
 <% else %>
 	<ul>
 	<% Spree::Config[:locale].split(",").each do |locale| %>
@@ -23,7 +27,7 @@ $(document).ready(function() {
 	<% end %>
 	</ul>
 	<% Spree::Config[:locale].split(",").each do |locale| %>
-	<div id="tab_ot_<%= locale.to_s %>">
+	<div id="tab_<%= locale.to_s %>">
 		<%= f.globalize_fields_for locale.to_sym do |g| %>
 		<% Spree::OptionType.translated_attribute_names.each_with_index do |attr, i| %>
 			<%= g.label attr, t(attr) %><br />
@@ -32,6 +36,5 @@ $(document).ready(function() {
 		<% end %>
 	</div>
 	<% end %>
-
 <% end %>
 </div>

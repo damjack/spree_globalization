@@ -12,3 +12,4 @@ en:
   cs_language: Czech
   sl_language: Slovenian
   locales: Languages (only enter the language codes separated by commas)
+  use_locale_filter: "Use localization for routing of site"

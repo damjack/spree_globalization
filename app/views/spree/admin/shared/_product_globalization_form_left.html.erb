@@ -35,10 +35,10 @@ $(document).ready(function() {
 	<%= f.globalize_fields_for lang.to_sym do |g| %>
 	<% Spree::Product.translated_attribute_names.each_with_index do |attr, i| %>
 	<% if(Spree::Product.columns_hash[attr.to_s].type == :text) %>
-			<%= g.label attr, t(f)%><br />
+			<%= g.label attr, t(attr)%><br />
 			<%= g.cktext_area attr, {:rows => "#{unless @product.has_variants? then '20' else '13' end}", :class => 'fullwidth'} %>
 	<% else %>
-			<%= g.label attr, t(f) %><br />
+			<%= g.label attr, t(attr) %><br />
 			<%= g.text_field attr, :class => 'fullwidth title'  %>
 	<% end %>
 		<% end %>

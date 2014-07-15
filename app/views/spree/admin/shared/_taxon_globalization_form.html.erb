@@ -1,0 +1,71 @@
+<div id="tabs_tt" data-hook="admin_inside_taxon_form" class="row">
+<% if(Spree::Config[:locale].split(",").blank? && Spree::Config[:locale].split(",").count <= 1) %>
+  <div class="alpha five columns">
+    <%= f.field_container :name do %>
+      <%= f.label :name, t(:name) %> <span class="required">*</span><br />
+      <%= error_message_on :taxon, :name, :class => 'fullwidth title' %>
+      <%= text_field :taxon, :name, :class => 'fullwidth' %>
+    <% end %>
+
+    <%= f.field_container :permalink_part do %>
+      <%= f.label :permalink_part, t(:permalink) %><span class="required">*</span><br />
+      <%= @taxon.permalink.split("/")[0...-1].join("/") + "/" %>
+      <%= text_field_tag :permalink_part, @permalink_part %>
+    <% end %>
+
+    <%= f.field_container :icon do %>
+      <%= f.label :icon, t(:icon) %><br />
+      <%= f.file_field :icon %>
+    <% end %>
+  </div>
+
+  <div class="omega seven columns">
+    <%= f.field_container :description do %>
+      <%= f.label :description, t(:description) %><br />
+      <%= f.text_area :description, :class => 'fullwidth', :rows => 6 %>
+    <% end %>
+  </div>
+<% else %>
+	<ul>
+	<% Spree::Config[:locale].split(",").each do |lang| %>
+		<li><%= link_to "#{lang.to_s.titleize}", "#tab_#{lang.to_s}"%></li>
+	<% end %>
+	</ul>
+
+	<% Spree::Config[:locale].split(",").each do |lang| %>
+	<div id="tab_<%= lang.to_s %>">
+		<%= f.globalize_fields_for lang.to_sym do |g| %>
+		<% Spree::Taxon.translated_attribute_names.each_with_index do |attr, i| %>
+			<% if(Spree::Product.columns_hash[attr.to_s].type == :text) %>
+					<%= g.label attr, t(attr)%><br />
+					<%= g.cktext_area attr, {:rows => 13, :class => 'fullwidth'} %><br/><br/>
+			<% else %>
+					<%= g.label attr, t(attr) %><br />
+					<%= g.text_field attr, :class => 'fullwidth title'  %><br/><br/>
+			<% end %>
+		<% end %>
+		<% end %>
+	</div>
+	<% end %>
+
+    <%= f.field_container :icon do %>
+      <%= f.label :icon, t(:icon) %><br />
+      <%= f.file_field :icon %>
+    <% end %>
+		
+		<%= f.field_container :is_page do %>
+			<%= f.label :is_page, t(:is_page) %><br />
+			<%= f.check_box :is_page %>
+			<%= f.error_message_on :is_page %>
+		<% end %>
+
+<% end %>
+</div>
+
+<% unless Rails.env.test? %>
+<script type="text/javascript">
+	$(document).ready(function() {
+		$("#tabs_tt").tabs();
+	});
+</script>
+<% end %>

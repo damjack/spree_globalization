@@ -1,2 +1,5 @@
+<%= preference_field_tag(:use_locale_filter, Spree::Config[:use_locale_filter], :type => :boolean) %>
+<%= label_tag(:use_locale_filter, t(:use_locale_filter) + ': ') + tag(:br) %>
+
 <%= label_tag(:locales, t(:locales) + ': ') + tag(:br) %>
 <%= preference_field_tag(:locale, Spree::Config[:locale], :type => Spree::Config[:locale]) %>

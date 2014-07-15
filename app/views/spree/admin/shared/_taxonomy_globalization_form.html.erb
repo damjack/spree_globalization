@@ -3,6 +3,10 @@ $(document).ready(function() {
 	$("#tabs_t").tabs();
 });
 </script>
+<%= t(:taxonomy_edit) %>
+<% Spree::Config[:locale].split(",").map do |locale| %>
+  <%= link_to(locale, edit_admin_taxonomy_path(@taxonomy, :lang => locale)) %>
+<% end.join("|") %>
 <div id="tabs_t" data-hook="admin_inside_taxonomy_form">
 <% if(Spree::Config[:locale].split(",").blank? && Spree::Config[:locale].split(",").count <= 1) %>
 	<%= f.field_container :name do %>

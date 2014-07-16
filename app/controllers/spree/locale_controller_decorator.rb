@@ -4,12 +4,14 @@ Spree::LocaleController.class_eval do
       session['user_return_to'] = request.referer
     end
 
-    if params[:locale] && I18n.available_locales.map(&:to_s).include?(params[:locale])
-      session[:locale] = I18n.locale = params[:locale]
-      flash.notice = t(:locale_changed)
-    else
-      flash[:error] = t(:locale_not_changed)
+    if Spree::Config[:use_locale_filter]
+      if params[:locale] && I18n.available_locales.map(&:to_s).include?(params[:locale])
+        session[:locale] = I18n.locale = params[:locale]
+        flash.notice = t(:locale_changed)
+      else
+        flash[:error] = t(:locale_not_changed)
+      end
+      redirect_to root_path(:locale => params[:locale])
     end
-    redirect_to root_path(:locale => params[:locale])
   end
 end

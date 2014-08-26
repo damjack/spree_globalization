@@ -12,7 +12,7 @@ Spree::BaseController.class_eval do
   # or Rails.application.config.i18n.default_locale
   def set_user_language
     if Spree::Config[:use_locale_filter]
-      locale = params[:locale] || session[:locale] || I18n.locale || Spree::Config[:default_locale] || Rails.application.config.i18n.default_locale
+      locale = params[:locale] || session[:locale] || I18n.default_locale || Spree::Config[:default_locale] || Rails.application.config.i18n.default_locale
       locale = I18n.default_locale unless locale && I18n.available_locales.include?(locale.to_sym)
       I18n.locale = locale.to_sym
     end
